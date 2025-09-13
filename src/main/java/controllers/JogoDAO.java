@@ -10,7 +10,7 @@ public class JogoDAO {
     public JogoDAO() {}
 
     public void save(Jogo jogo) throws SQLException {
-        String sql = "INSERT INTO jogo (NOME, GENERO, STATUS) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO jogo (NOME, GENERO, STATUS, PLATAFORMA, anoLancamento) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = ConnectionFactory.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -18,6 +18,8 @@ public class JogoDAO {
             stmt.setString(1, jogo.getNome());
             stmt.setString(2, jogo.getGenero());
             stmt.setString(3, jogo.getStatus());
+            stmt.setString(4, jogo.getPlataforma());
+            stmt.setInt(5, jogo.getAnoLancamento());
 
             int rowAffected = stmt.executeUpdate();
             if (rowAffected == 0) {
@@ -46,7 +48,9 @@ public class JogoDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Jogo j = new Jogo(rs.getString("NOME"), rs.getString("GENERO"), rs.getString("STATUS"));
+                Jogo j = new Jogo(rs.getString("NOME"), rs.getString("GENERO"),
+                        rs.getString("STATUS"),  rs.getString("PLATAFORMA"),
+                        rs.getInt("anoLancamento"));
                 j.setId(rs.getInt("ID"));
                 jogos.add(j);
             }
@@ -65,7 +69,9 @@ public class JogoDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    Jogo j = new Jogo(rs.getString("NOME"), rs.getString("GENERO"), rs.getString("STATUS"));
+                    Jogo j = new Jogo(rs.getString("NOME"), rs.getString("GENERO"),
+                            rs.getString("STATUS"),
+                            rs.getString("PLATAFORMA"), rs.getInt("anoLancamento"));
                     j.setId(rs.getInt("ID"));
                     jogos.add(j);
                 }

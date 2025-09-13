@@ -15,7 +15,7 @@ public class Main {
         JogoDAO dao = new JogoDAO();
         List<Jogo> jogos = dao.readAll();
 
-        String[] columns = {"ID", "NOME", "GENERO", "STATUS"};
+        String[] columns = {"ID", "NOME", "GENERO", "STATUS", "PLATAFORMA", "ANO DE LANÇAMENTO"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         for (Jogo j : jogos){
@@ -23,7 +23,9 @@ public class Main {
                     j.getId(),
                     j.getNome(),
                     j.getGenero(),
-                    j.getStatus()
+                    j.getStatus(),
+                    j.getPlataforma(),
+                    j.getAnoLancamento()
             });
         }
         table.setModel(model);
@@ -52,6 +54,13 @@ public class Main {
         inputPanel.add(new JLabel("Status: "));
         JTextField statusText = new JTextField();
         inputPanel.add(statusText);
+        inputPanel.add(new JLabel("Plataforma: "));
+        JTextField plataformText = new JTextField();
+        inputPanel.add(plataformText);
+        inputPanel.add(new JLabel("Ano de lançamento: "));
+        JTextField anoText = new JTextField();
+        inputPanel.add(anoText);
+
 
         inputPanel.setPreferredSize(new Dimension(500, 800));
 
@@ -78,7 +87,7 @@ public class Main {
         inputPanel.add(buttonPanel);
         frame.add(inputPanel);
 
-        String[] columns = {"ID", "Nome", "Genero", "Status"};
+        String[] columns = {"ID", "Nome", "Genero", "Status", "Plataformas", "Ano de Lançamento"};
         Object[][] data = {};
         JTable table = new JTable(data, columns);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -103,9 +112,11 @@ public class Main {
             String nome = nomeText.getText();
             String genero = generoText.getText();
             String status = statusText.getText();
+            String plataforma = plataformText.getText();
+            int anoLancamento = Integer.parseInt(anoText.getText());
 
 
-            Jogo jogo = new Jogo(nome, genero, status);
+            Jogo jogo = new Jogo(nome, genero, status, plataforma, anoLancamento);
 
             try{
                 dao.save(jogo);

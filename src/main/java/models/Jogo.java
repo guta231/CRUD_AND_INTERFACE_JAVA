@@ -6,11 +6,15 @@ public class Jogo {
     private String nome;
     private String status;
     private String genero;
+    private String plataforma;
+    private int anoLancamento;
 
-    public Jogo(String nome, String status, String genero) {
+    public Jogo(String nome, String status, String genero, String plataforma, int anoLancamento) {
         this.nome = nome;
         this.status = status;
         this.genero = genero;
+        this.plataforma = plataforma;
+        this.anoLancamento = anoLancamento;
     }
 
     public int getId(){
@@ -37,7 +41,10 @@ public class Jogo {
     public String setGenero(String genero){
         return this.genero = genero;
     }
-
+    public String getPlataforma(){return this.plataforma;}
+    public String setPlataforma(String plataforma){return this.plataforma = plataforma;}
+    public int getAnoLancamento(){return this.anoLancamento;}
+    public int setAnoLancamento(int anoLancamento){return this.anoLancamento = anoLancamento;}
     @Override
     public String toString(){
         return "Jogo [id=" + id + ", nome=" + nome + ", genero=" + genero + ", status=" + status + "]";
