@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
 
@@ -37,6 +38,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1280, 800);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
+        frame.setLocationRelativeTo(null);
 
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(20, 2));
@@ -56,9 +58,17 @@ public class Main {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         System.out.println(buttonPanel.getPreferredSize());
         JButton addButton = new JButton("Adicionar");
+        addButton.setBackground(Color.BLUE);
+        addButton.setForeground(Color.WHITE);
         JButton selectAllButton = new JButton("Selecionar todos");
+        selectAllButton.setBackground(Color.BLUE);
+        selectAllButton.setForeground(Color.WHITE);
         JButton selectByIdButton = new JButton("Selecionar por ID");
+        selectByIdButton.setBackground(Color.BLUE);
+        selectByIdButton.setForeground(Color.WHITE);
         JButton deleteButton = new JButton("Excluir");
+        deleteButton.setBackground(Color.BLUE);
+        deleteButton.setForeground(Color.WHITE);
 
         buttonPanel.add(addButton);
         buttonPanel.add(selectAllButton);
@@ -110,17 +120,28 @@ public class Main {
             }
         });
 
+
         selectByIdButton.addActionListener(event -> {
+
 
             JogoDAO dao = new JogoDAO();
 
             JFrame frameId = new JFrame();
             frameId.setSize(400, 200);
             frameId.setVisible(true);
+            frameId.setLocationRelativeTo(frame);
 
             JPanel idPanel = new JPanel();
             JSpinner idSpinner = new JSpinner();
             JButton idButton = new JButton("Ok");
+            idButton.setBackground(Color.BLUE);
+            idButton.setForeground(Color.WHITE);
+            try {
+                idSpinner.setModel(new SpinnerNumberModel(dao.selectMinId(), dao.selectMinId(), dao.selectMaxId(), 1));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
             idPanel.add(idSpinner);
             idPanel.add(idButton);
             frameId.add(idPanel);
